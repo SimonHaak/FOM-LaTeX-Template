@@ -18,10 +18,13 @@ jobs:
         with:
           run: |
             ./compile.sh en
-      - name: Upload PDF Files as Artifacts
+      - name: Upload  german PDF as Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: my-artifact
           path:
             thesis_main.pdf
+      - name: Upload english PDF as Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          path:
             thesis_englisch.pdf
