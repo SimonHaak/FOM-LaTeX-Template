@@ -20,3 +20,33 @@ jobs:
           run: |
             ./compile.sh en
             ./compile.sh
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+      - name: Upload thesis_main
+        id: upload-thesis_main 
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} 
+          asset_path: ./thesis_main.pdf
+          asset_name: thesis_main.pdf
+          asset_content_type: pdf
+      - name: Upload thesis_englisch
+        id: upload-thesis_englisch 
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} 
+          asset_path: ./thesis_englisch.pdf
+          asset_name: thesis_englisch.pdf
+          asset_content_type: pdf
