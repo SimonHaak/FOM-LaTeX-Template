@@ -20,11 +20,12 @@ jobs:
           run: |
             ./compile.sh en
             ./compile.sh
-      - name: Compile LaTeX document
+      - name: Upload PDF Files
         uses: xresloader/upload-to-github-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           file: "*.pdf"
-          tags: true
+          tags: false
+          overwrite: true
           draft: true
