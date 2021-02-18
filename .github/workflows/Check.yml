@@ -1,8 +1,7 @@
 on:
   push:
-    branches:
-      - main
-      - github-actions
+  schedule:
+  - cron: "5 1 * * *"
 jobs:
   build_latex:
     runs-on: ubuntu-latest
@@ -19,7 +18,22 @@ jobs:
         with:
           run: |
             ./compile.sh en
+      - name: Upload german PDF as Artifact
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v2
+        with:
+          name: thesis_main.pdf
+          path:
+            thesis_main.pdf
+      - name: Upload english PDF as Artifact
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v2
+        with:
+          name: thesis_englisch.pdf
+          path:
+            thesis_englisch.pdf
       - name: Upload PDF Files to Release
+        if: github.ref == 'refs/heads/master'
         uses: xresloader/upload-to-github-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
