@@ -18,6 +18,12 @@ jobs:
         with:
           run: |
             ./compile.sh en
+      - name: Print GitHub event action
+        run: |
+          echo "${{ github.event.action }}"
+      - name: Print GitHub event name
+        run: |
+          echo "${{ github.event_name }}"
       - name: Upload german PDF as Artifact
         if: github.event_name == 'pull_request'
         uses: actions/upload-artifact@v2
